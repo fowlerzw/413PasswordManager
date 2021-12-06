@@ -8,14 +8,16 @@
 </head>
 <body>
 <form action="/getPassword" method="post">
-  <div class="container text-md-center">
+  <div class="container text-md-center center loginLogout">
       <h1> Welcome to your password lair!</h1>
+      <br>
       <h4>Enter your masterkey below to enter your secure password vault.</h4>
+      <br>
 
-    <label for="psw"><b>Masterkey</b></label>
-    <input type="password" placeholder="Enter Masterkey" name="psw" required>
+    <label for="password"><b>Masterkey</b></label>
+    <input type="password" placeholder="Enter Masterkey" name="password" required>
 
-    <button type="submit">Login</button>
+    <button type="submit href="{{ url_for('home') }}>Login</button>
 
   </div>
 

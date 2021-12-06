@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
+</head>
+<body>
+ <div class="container text-md-center center loginLogout">
+      <h1 >You have exited the lair</h1>
+     <br>
+     <a href="{{ url_for('login') }}">Click here to login again</a>
+ </div>
+
+</body>
+</html>

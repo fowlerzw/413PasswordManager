@@ -11343,9 +11343,17 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 300px;
   padding: 10px;
   background-color: white;
+  border: #1a1e21;
+  border-style: solid;
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:1000px;  /* adjust as per your needs */
+  height:1000px;   /* adjust as per your needs */
+  margin-left:-1350px;   /* negative half of width above */
+  margin-top:-600px;   /* negative half of height above */
 }
 
 /* Full-width input fields */
@@ -11384,4 +11392,14 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+
+.center {
+  padding: 250px 0;
+}
+
+.loginLogout {
+
+}
+
+
 }
