@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
+</head>
+<body>
+<form action="/getPassword" method="post">
+  <div class="container text-md-center">
+      <h1> Welcome to your password lair!</h1>
+      <h4>Enter your masterkey below to enter your secure password vault.</h4>
+
+    <label for="psw"><b>Masterkey</b></label>
+    <input type="password" placeholder="Enter Masterkey" name="psw" required>
+
+    <button type="submit">Login</button>
+
+  </div>
+
+</form>
+</body>
+</html>
