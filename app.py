@@ -19,12 +19,13 @@ def login():  # put application's code here
 # This renders the main template with password data table
 @app.route('/home')
 def home():
+    df = pd.read_csv(filename, names=["site","user","pass"])
     #decrypts password
     for passwords in df["pass"]:
         namespace = passwords
 
     #Makes dataframe table to html
-    df = pd.read_csv(filename, names=["site","user","pass"])
+    
     result = df.to_html()
     session['table'] = result
 
