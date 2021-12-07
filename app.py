@@ -28,7 +28,6 @@ def login():  # put application's code here
 def home():
     df = pd.read_csv(filename, names=["site","user","pass"], encoding= 'unicode_escape')
     for passwords in df["pass"]:
-        
         names = decrypt(passwords)
         df["pass"].replace({passwords: names}, inplace=True)
         
@@ -93,20 +92,15 @@ def decrypt(encryptpass):
     return decryptedpass
 
 # This deletes the inputted entry from the data table
-@app.route('/deletePassword')
+@app.route('/deletePassword', methods=['GET', 'POST'])
 def deletePassword():
     #fill with code to delete entry
     if request.method == 'POST':
         domainname = request.form['domainname']
-        password = request.form['password']
-
-        # stores current user password
-        session['domainname'] = domainname
-        session['password'] = password
-
-        # Deletes from the data table
-
-        # redirects to home (unneeded)
+        df = pd.read_csv(filename, names=["site","user","pass"])
+        df = df[df.site != domainname]
+        
+        df.to_csv(filename,header=False,index=False)
         return redirect('home')
 
 
