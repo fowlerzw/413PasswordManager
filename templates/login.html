@@ -7,17 +7,19 @@
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
 </head>
 <body>
-<form action="/getPassword" method="post">
+<form action="/getPassword" method="POST">
   <div class="container text-md-center center loginLogout">
       <h1> Welcome to your password lair!</h1>
       <br>
       <h4>Enter your masterkey below to enter your secure password vault.</h4>
       <br>
 
-    <label for="password"><b>Masterkey</b></label>
-    <input type="password" placeholder="Enter Masterkey" name="password" required>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input name="password" type="password" class="form-control" id="password">
+      </div>
 
-    <button type="submit href="{{ url_for('home') }}>Login</button>
+    <button type="submit" name="submit" value="submit">Login</button>
 
   </div>
 

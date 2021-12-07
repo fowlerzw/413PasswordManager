@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, session, redirect
 import pandas as pd
 import csv
+from passlib.hash import pbkdf2_sha256
+from cryptography.fernet import Fernet
 
+key = "$pbkdf2-sha256$29000$lDKm1BrjHIOQshaidC4FYA$5XCeCdY9e0K7yzsMaVstl65KisBvotxOdNuh00zFvsc"
 filename = "DataSet.csv"
 app = Flask(__name__)
 
@@ -20,32 +23,27 @@ def login():  # put application's code here
 @app.route('/home')
 def home():
     df = pd.read_csv(filename, names=["site","user","pass"])
-    #decrypts password
     for passwords in df["pass"]:
-        namespace = passwords
-
-    #Makes dataframe table to html
-    
+        names = decrypt(passwords)
     result = df.to_html()
-    session['table'] = result
-
-    return render_template('home.html')
+    return render_template('home.html',result = result)
 
 # This checks if the masterkey is correct
-@app.route('/getPassword')
+@app.route('/getPassword', methods=['POST'])
 def getPassword():
     #fill with code to save masterkey
     if request.method == 'POST':
         password = request.form['password']
 
         #stores current user password
-        session['password'] = password
 
         #check if password is correct
-
+        if (pbkdf2_sha256.verify(password, key)):
+            return redirect('home')
+        else:
+            return "nice try asshole"
         #redirects to home
-        return redirect('home')
-
+        
 
 # This adds a new entry to the data table
 @app.route('/addPassword')
@@ -53,6 +51,7 @@ def addPassword():
     #fill with code to add a new password and domain
     if request.method == 'POST':
         domainname = request.form['domainname']
+        domainname = request.form['username']
         password = request.form['password']
 
         # stores current user password
@@ -73,10 +72,16 @@ def addPassword():
 
 #encrypt
 def encrypt(password):
-    return password
+    fernet = Fernet(key)
+    encryptpass = fernet.encrypt(password.encode())
+    return encryptpass
+
 #decrypt
-def decrypt():
-    print("hi")
+def decrypt(encryptpass):
+    fernet = Fernet(key)
+    decryptedpass = fernet.decrypt(encryptpass).decode()
+
+    return decryptedpass
 
 # This deletes the inputted entry from the data table
 @app.route('/deletePassword')
