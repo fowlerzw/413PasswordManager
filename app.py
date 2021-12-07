@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, session, redirect
+import pandas as pd
+import csv
 
+filename = "DataSet.csv"
 app = Flask(__name__)
 
 #this renders the logout template
@@ -44,12 +47,28 @@ def addPassword():
 
         # stores current user password
         session['domainname'] = domainname
+        session['username'] = user
         session['password'] = password
+        encryptpass = encrypt(password)
 
         # adds to the data table
-
+        rows = [str(domainname),str(user),str(encryptpass)]
+        with open(filename, 'a') as csvfile: 
+            csvwriter = csv.writer(csvfile) 
+            csvwriter.writerow(rows)
+        
+        #Makes dataframe table to html
+        df = pd.read_csv(filename, names=["site","user","pass"])
+        result = df.to_html()
+        session['table'] = result
+        
         # redirects to home (unneeded)
         return redirect('home')
+
+
+#encrypt
+def encrypt():
+
 
 # This deletes the inputted entry from the data table
 @app.route('/deletePassword')
