@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, session, redirect
+
+from flask import Flask, render_template, request, session, redirect, url_for
 import pandas as pd
 import csv
+
 from passlib.hash import pbkdf2_sha256
 from cryptography.fernet import Fernet
+
 
 
 pee = b'kh8n73vwtCY77uC7UGI6Lyqryw_1lpirSs9lqIaFHJY='
@@ -10,7 +13,10 @@ f = Fernet(pee)
 key = "$pbkdf2-sha256$29000$lDKm1BrjHIOQshaidC4FYA$5XCeCdY9e0K7yzsMaVstl65KisBvotxOdNuh00zFvsc"
 filename = "DataSet.csv"
 
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'c676dfde28b0b13ce00ba2455791628b'
+
 
 #this renders the logout template
 @app.route('/logout')
@@ -20,19 +26,24 @@ def logout():  # put application's code here
 #this renders logout to starting endpoint and /login with login template
 @app.route('/')
 @app.route('/login')
-def login():  # put application's code here
+def login():
+    session.pop('logged_in', None)
+    session['logged_in'] = False
     return render_template('login.html')
 
 # This renders the main template with password data table
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    df = pd.read_csv(filename, names=["site","user","pass"], encoding= 'unicode_escape')
-    for passwords in df["pass"]:
-        names = decrypt(passwords)
-        df["pass"].replace({passwords: names}, inplace=True)
-        
-    result = df.to_html()
-    return render_template('home.html', result = result)
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    else:
+        df = pd.read_csv(filename, names=["site", "user", "pass"], encoding='unicode_escape')
+        for passwords in df["pass"]:
+            names = decrypt(passwords)
+            df["pass"].replace({passwords: names}, inplace=True)
+
+        result = df.to_html()
+        return render_template('home.html', result=result)
 
 # This checks if the masterkey is correct
 @app.route('/getPassword', methods=['GET', 'POST'])
@@ -41,13 +52,13 @@ def getPassword():
     if request.method == 'POST':
         password = request.form['password']
 
-        #stores current user password
-
         #check if password is correct
         if (pbkdf2_sha256.verify(password, key)):
+            session['logged_in'] = True
             return redirect('home')
         else:
-            return "nice try asshole"
+            session['logged_in'] = False
+            return redirect('login')
         #redirects to home
         
 
@@ -102,6 +113,8 @@ def deletePassword():
         
         df.to_csv(filename,header=False,index=False)
         return redirect('home')
+
+
 
 
 if __name__ == '__main__':
