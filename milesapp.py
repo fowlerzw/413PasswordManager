@@ -23,12 +23,13 @@ def main():  # put application's code here
             csvwriter = csv.writer(csvfile) 
             csvwriter.writerow(rows)
     elif(menu == "V"):
-        df = pd.read_csv(filename, names=["site","user","pass"])
+        print("hi")
+    df = pd.read_csv(filename, names=["site","user","pass"])
         
     for passwords in df["pass"]:
-        namespace = fernet.decrypt(passwords).decode()
-        print(namespace)
-    print(df)
+        
+        print(passwords)
+
     
 
     

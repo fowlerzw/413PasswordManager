@@ -19,6 +19,15 @@ def login():  # put application's code here
 # This renders the main template with password data table
 @app.route('/home')
 def home():
+    #decrypts password
+    for passwords in df["pass"]:
+        namespace = passwords
+
+    #Makes dataframe table to html
+    df = pd.read_csv(filename, names=["site","user","pass"])
+    result = df.to_html()
+    session['table'] = result
+
     return render_template('home.html')
 
 # This checks if the masterkey is correct
@@ -56,19 +65,17 @@ def addPassword():
         with open(filename, 'a') as csvfile: 
             csvwriter = csv.writer(csvfile) 
             csvwriter.writerow(rows)
-        
-        #Makes dataframe table to html
-        df = pd.read_csv(filename, names=["site","user","pass"])
-        result = df.to_html()
-        session['table'] = result
-        
+
         # redirects to home (unneeded)
         return redirect('home')
 
 
 #encrypt
-def encrypt():
-
+def encrypt(password):
+    return password
+#decrypt
+def decrypt():
+    print("hi")
 
 # This deletes the inputted entry from the data table
 @app.route('/deletePassword')
