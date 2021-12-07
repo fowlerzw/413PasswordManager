@@ -4,8 +4,12 @@ import csv
 from passlib.hash import pbkdf2_sha256
 from cryptography.fernet import Fernet
 
+
+pee = b'kh8n73vwtCY77uC7UGI6Lyqryw_1lpirSs9lqIaFHJY='
+f = Fernet(pee)
 key = "$pbkdf2-sha256$29000$lDKm1BrjHIOQshaidC4FYA$5XCeCdY9e0K7yzsMaVstl65KisBvotxOdNuh00zFvsc"
 filename = "DataSet.csv"
+
 app = Flask(__name__)
 
 #this renders the logout template
@@ -20,16 +24,19 @@ def login():  # put application's code here
     return render_template('login.html')
 
 # This renders the main template with password data table
-@app.route('/home')
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    df = pd.read_csv(filename, names=["site","user","pass"])
+    df = pd.read_csv(filename, names=["site","user","pass"], encoding= 'unicode_escape')
     for passwords in df["pass"]:
+        
         names = decrypt(passwords)
+        df["pass"].replace({passwords: names}, inplace=True)
+        
     result = df.to_html()
-    return render_template('home.html',result = result)
+    return render_template('home.html', result = result)
 
 # This checks if the masterkey is correct
-@app.route('/getPassword', methods=['POST'])
+@app.route('/getPassword', methods=['GET', 'POST'])
 def getPassword():
     #fill with code to save masterkey
     if request.method == 'POST':
@@ -46,18 +53,16 @@ def getPassword():
         
 
 # This adds a new entry to the data table
-@app.route('/addPassword')
+@app.route('/addPassword', methods=['GET', 'POST'])
 def addPassword():
     #fill with code to add a new password and domain
     if request.method == 'POST':
         domainname = request.form['domainname']
-        domainname = request.form['username']
+        user = request.form['username']
         password = request.form['password']
 
         # stores current user password
-        session['domainname'] = domainname
-        session['username'] = user
-        session['password'] = password
+        
         encryptpass = encrypt(password)
 
         # adds to the data table
@@ -72,15 +77,19 @@ def addPassword():
 
 #encrypt
 def encrypt(password):
-    fernet = Fernet(key)
-    encryptpass = fernet.encrypt(password.encode())
+  
+
+    password = password.encode()
+    encryptpass = f.encrypt(password)
     return encryptpass
 
 #decrypt
 def decrypt(encryptpass):
-    fernet = Fernet(key)
-    decryptedpass = fernet.decrypt(encryptpass).decode()
 
+    encryptpass = encryptpass[2:-1]
+    passw = encryptpass.encode()
+    decryptedpass = f.decrypt(passw)
+    decryptedpass = decryptedpass.decode("utf-8") 
     return decryptedpass
 
 # This deletes the inputted entry from the data table
