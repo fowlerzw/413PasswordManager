@@ -107,10 +107,9 @@ def decrypt(encryptpass):
 def deletePassword():
     #fill with code to delete entry
     if request.method == 'POST':
-        domainname = request.form['domainname']
-        username = request.form['username']
+        domainname = request.form['rowNum']
         df = pd.read_csv(filename, names=["site","user","pass"])
-        df = df[df.site != domainname]
+        df.drop(int(domainname),0,inplace=True)
         
         df.to_csv(filename,header=False,index=False)
         return redirect('home')
