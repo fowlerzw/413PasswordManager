@@ -78,11 +78,8 @@
                 <div class="form-popup" id="deleteForm">
                     <form action="/deletePassword" class="form-container" method="POST">
                         <h1>Delete a password</h1>
-                        <label for="email"><b>Domain Name</b></label>
-                        <input type="text" placeholder="Enter Domain Name" name="domainname" required>
-
-                        <label for="username"><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" name="username" required>
+                        <label for="rowNum"><b>Row Number</b></label>
+                        <input type="text" placeholder="Enter the row number to be deleted" name="rowNum" required>
 
                         <button type="submit" class="btn">Delete Entry</button>
                         <button type="button" class="btn cancel" onclick="closeFormDelete()">Close</button>
