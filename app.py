@@ -9,11 +9,12 @@ from cryptography.fernet import Fernet
 
 
 
-f = Fernet(pee)
+
 
 #Hard coded hash key
 pee = b'kh8n73vwtCY77uC7UGI6Lyqryw_1lpirSs9lqIaFHJY='
 key = "$pbkdf2-sha256$29000$lDKm1BrjHIOQshaidC4FYA$5XCeCdY9e0K7yzsMaVstl65KisBvotxOdNuh00zFvsc"
+f = Fernet(pee)
 filename = "DataSet.csv"
 
 #Flask API
