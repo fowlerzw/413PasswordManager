@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="efbc680b-8eb2-43e8-9be1-dfba984dede4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataSet.csv" beforeDir="false" afterPath="$PROJECT_DIR$/DataSet.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +72,10 @@
       <workItem from="1638908076750" duration="1943000" />
       <workItem from="1638930787222" duration="429000" />
       <workItem from="1638933186794" duration="166000" />
+      <workItem from="1638933356975" duration="71000" />
+      <workItem from="1638933487331" duration="4000" />
+      <workItem from="1638984669519" duration="611000" />
+      <workItem from="1639425896871" duration="649000" />
     </task>
     <servers />
   </component>
@@ -78,6 +83,6 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/413PasswordManager$413PasswordManager.coverage" NAME="413PasswordManager Coverage Results" MODIFIED="1638933187811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/413PasswordManager$413PasswordManager.coverage" NAME="413PasswordManager Coverage Results" MODIFIED="1639425989163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

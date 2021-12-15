@@ -108,6 +108,7 @@ def deletePassword():
     #fill with code to delete entry
     if request.method == 'POST':
         domainname = request.form['domainname']
+        username = request.form['username']
         df = pd.read_csv(filename, names=["site","user","pass"])
         df = df[df.site != domainname]
         
